@@ -4,7 +4,7 @@ export function ExtractionProgress({ current, total, progress }) {
   return (
     <div className="extraction-progress">
       <p>
-        Processing image {current} of {total}...
+        Extracting from {total} image{total > 1 ? 's' : ''}...
       </p>
       <div className="progress-bar">
         <div

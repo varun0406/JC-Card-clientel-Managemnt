@@ -1,0 +1,253 @@
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.app-header h1 {
+  font-size: 2rem;
+  margin: 0 0 0.5rem;
+}
+
+.app-header p {
+  color: var(--muted, #64748b);
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* API key input */
+.api-key-input {
+  margin-bottom: 1.5rem;
+  max-width: 480px;
+}
+
+.api-key-input label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.api-key-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.api-key-row input {
+  flex: 1;
+  padding: 0.6rem;
+  border: 1px solid var(--border, #334155);
+  border-radius: 8px;
+  background: var(--bg-secondary, #1e293b);
+  color: inherit;
+  font: inherit;
+}
+
+.api-key-row input:focus {
+  outline: none;
+  border-color: var(--primary, #3b82f6);
+}
+
+.api-key-row button {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border, #334155);
+  background: var(--bg-secondary, #1e293b);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.api-key-row button:hover:not(:disabled) {
+  border-color: var(--primary, #3b82f6);
+}
+
+.api-key-row button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.api-key-hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted, #64748b);
+}
+
+.api-key-hint a {
+  color: var(--primary, #3b82f6);
+}
+
+.error-msg {
+  color: #ef4444;
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+/* Image upload */
+.image-upload {
+  border: 2px dashed var(--border, #475569);
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  text-align: center;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.image-upload:hover:not(:has(input:disabled)) {
+  border-color: var(--primary, #3b82f6);
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.image-upload input {
+  display: none;
+}
+
+.upload-label {
+  cursor: pointer;
+  color: var(--muted, #64748b);
+  font-size: 1rem;
+}
+
+.image-upload:has(input:disabled) .upload-label {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Extraction progress */
+.extraction-progress {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: var(--bg-secondary, #1e293b);
+  border-radius: 8px;
+}
+
+.extraction-progress p {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+}
+
+.progress-bar {
+  height: 8px;
+  background: var(--border, #334155);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--primary, #3b82f6);
+  transition: width 0.2s ease;
+}
+
+/* Data table */
+.data-table-wrap {
+  margin-top: 2rem;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.table-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.export-btn {
+  padding: 0.6rem 1.2rem;
+  background: var(--primary, #3b82f6);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.export-btn:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.export-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.empty-hint {
+  color: var(--muted, #64748b);
+  text-align: center;
+  padding: 2rem;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--border, #334155);
+  border-radius: 8px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border, #334155);
+}
+
+.data-table th {
+  font-weight: 600;
+  background: var(--bg-secondary, #1e293b);
+  font-size: 0.875rem;
+}
+
+.data-table td input {
+  width: 100%;
+  min-width: 100px;
+  padding: 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.data-table td input:focus {
+  outline: none;
+  border-color: var(--primary, #3b82f6);
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.row-thumbnail {
+  width: 60px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+@media (prefers-color-scheme: light) {
+  .extraction-progress {
+    background: #f1f5f9;
+  }
+  .table-scroll {
+    border-color: #e2e8f0;
+  }
+  .data-table th {
+    background: #f8fafc;
+  }
+  .data-table th,
+  .data-table td {
+    border-bottom-color: #e2e8f0;
+  }
+}

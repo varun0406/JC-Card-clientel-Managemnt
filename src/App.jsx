@@ -2,7 +2,6 @@ import { useState, useCallback } from 'react';
 import { ImageUpload } from './components/ImageUpload';
 import { ExtractionProgress } from './components/ExtractionProgress';
 import { DataTable } from './components/DataTable';
-import { ApiKeyInput } from './components/ApiKeyInput';
 import { extractBusinessCardWithGemini } from './utils/gemini';
 import { exportToExcel } from './utils/excelExport';
 import './App.css';
@@ -19,45 +18,37 @@ function App() {
   const [rows, setRows] = useState([]);
   const [processing, setProcessing] = useState(false);
   const [progress, setProgress] = useState({ current: 0, total: 0, value: 1 });
-  const [apiKey, setApiKey] = useState('');
   const [error, setError] = useState('');
 
-  const handleFilesSelected = useCallback(
-    async (files) => {
-      if (!apiKey?.trim()) {
-        setError('Please enter your Google AI Studio API key first');
-        return;
-      }
-      setError('');
-      setProcessing(true);
-      const newRows = [];
+  const handleFilesSelected = useCallback(async (files) => {
+    setError('');
+    setProcessing(true);
+    const newRows = [];
 
-      for (let i = 0; i < files.length; i++) {
-        setProgress({ current: i + 1, total: files.length, value: 0.5 });
+    for (let i = 0; i < files.length; i++) {
+      setProgress({ current: i + 1, total: files.length, value: 0.5 });
 
-        const file = files[i];
-        let parsed = {};
-        try {
-          parsed = await extractBusinessCardWithGemini(file, apiKey);
-        } catch (err) {
-          console.error('Extraction failed:', err);
-          setError(err?.message || 'Extraction failed');
-        }
-
-        const thumbnail = await createThumbnail(file);
-        newRows.push({
-          id: `${Date.now()}-${i}`,
-          thumbnail,
-          ...parsed,
-        });
+      const file = files[i];
+      let parsed = {};
+      try {
+        parsed = await extractBusinessCardWithGemini(file);
+      } catch (err) {
+        console.error('Extraction failed:', err);
+        setError(err?.message || 'Extraction failed');
       }
 
-      setRows((prev) => [...prev, ...newRows]);
-      setProcessing(false);
-      setProgress({ current: 0, total: 0, value: 1 });
-    },
-    [apiKey]
-  );
+      const thumbnail = await createThumbnail(file);
+      newRows.push({
+        id: `${Date.now()}-${i}`,
+        thumbnail,
+        ...parsed,
+      });
+    }
+
+    setRows((prev) => [...prev, ...newRows]);
+    setProcessing(false);
+    setProgress({ current: 0, total: 0, value: 1 });
+  }, []);
 
   const handleExport = useCallback(() => {
     const data = rows.map(({ id, thumbnail, ...rest }) => rest);
@@ -72,8 +63,6 @@ function App() {
       </header>
 
       <main className="app-main">
-        <ApiKeyInput onApiKeyChange={setApiKey} disabled={processing} />
-
         <ImageUpload
           onFilesSelected={handleFilesSelected}
           disabled={processing}

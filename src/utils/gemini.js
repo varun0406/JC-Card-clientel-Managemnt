@@ -1,5 +1,8 @@
 import { GoogleGenAI, createPartFromBase64, createPartFromText } from '@google/genai';
 
+// Embed your API key: paste directly here, or set VITE_GEMINI_API_KEY in .env
+const EMBEDDED_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
+
 const EXTRACTION_PROMPT = `Extract business card information from this image. Return ONLY a valid JSON object with these exact keys (use empty string "" if not found):
 {
   "firmName": "company or organization name",
@@ -43,12 +46,15 @@ function parseJsonResponse(text) {
  * @returns {Promise<{firmName: string, personName: string, phone: string, email: string, address: string}>}
  */
 export async function extractBusinessCardWithGemini(file, apiKey) {
-  if (!apiKey?.trim()) {
-    throw new Error('Please enter your Google AI Studio API key');
+  const key = (apiKey || EMBEDDED_API_KEY)?.trim();
+  if (!key) {
+    throw new Error(
+      'No API key. Set VITE_GEMINI_API_KEY in .env or embed in src/utils/gemini.js'
+    );
   }
 
   const { base64, mimeType } = await fileToBase64(file);
-  const ai = new GoogleGenAI({ apiKey: apiKey.trim() });
+  const ai = new GoogleGenAI({ apiKey: key });
 
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash',
